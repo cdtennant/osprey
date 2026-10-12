@@ -47,6 +47,9 @@ _ENV_KEYS = [
     "OSPREY_DISPATCH_RUN_ID",
     "OSPREY_TELEMETRY_SESSION_ID",
     "OSPREY_TELEMETRY_SESSION_START",
+    # The job's launch-scoped terminal session, ``dispatch-<run id>``; never
+    # the posture session, which stays unset for dispatch.
+    "OSPREY_TERMINAL_SESSION",
 ]
 
 
@@ -206,7 +209,9 @@ async def test_the_agent_options_are_the_ones_dispatch_always_built(monkeypatch,
         mcp_servers=str(render_dir / ".mcp.json"),
         strict_mcp_config=True,
     )
-    assert sorted(options.env) == _ENV_KEYS
+    assert sorted(options.env) == sorted(_ENV_KEYS)
+    assert options.env["OSPREY_TERMINAL_SESSION"] == "dispatch-run-p"
+    assert "OSPREY_POSTURE_SESSION" not in options.env
 
     assert options.hooks is not None
     assert list(options.hooks) == ["PreToolUse"]
