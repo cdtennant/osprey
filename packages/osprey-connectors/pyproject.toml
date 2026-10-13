@@ -16,7 +16,6 @@ dependencies = [
     "numpy>=2.2.6",
     "pandas>=2.2.3",
     "python-dateutil>=2.9.0",
-    "pyepics",
     # Channel Access client for the EPICS connector. Pure Python on top of
     # epicscorelibs, which ships a libca per architecture.
     "aioca>=2.1",
@@ -27,9 +26,7 @@ dependencies = [
     # there p4p, pvxslibs and epicscorelibs build from source, which needs a C
     # toolchain. The project image's deps layer already stages and purges one
     # under the `setuptools<84` pip constraint, so containers are covered;
-    # bare-metal arm64-linux installs need a compiler present. Note this is a
-    # stricter reach than pyepics, which is a py3-none-any wheel that installs
-    # anywhere and only fails at runtime if no libca is found.
+    # bare-metal arm64-linux installs need a compiler present.
     "p4p>=4.2",
     # MongoDB client for MongoDBArchiverConnector. Declared even though the
     # connector imports it inside connect(): the deferred import exists so
